@@ -5,6 +5,8 @@
  */
 package lagrange;
 
+import static java.lang.Double.parseDouble;
+
 /**
  *
  * @author yonfo
@@ -28,19 +30,19 @@ public class Window extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        eqtTable = new javax.swing.JTable();
+        eqtTableFx = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jCalcButton = new javax.swing.JButton();
         pxField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        eqtTable1 = new javax.swing.JTable();
+        eqtTableX = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        eqtTable.setModel(new javax.swing.table.DefaultTableModel(
+        eqtTableFx.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null}
             },
@@ -56,12 +58,17 @@ public class Window extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(eqtTable);
+        jScrollPane1.setViewportView(eqtTableFx);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Método de Lagrange");
 
         jCalcButton.setText("Calcular");
+        jCalcButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCalcButtonActionPerformed(evt);
+            }
+        });
 
         pxField.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         pxField.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +80,7 @@ public class Window extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         jLabel2.setText("P(x):");
 
-        eqtTable1.setModel(new javax.swing.table.DefaultTableModel(
+        eqtTableX.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null}
             },
@@ -89,7 +96,7 @@ public class Window extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(eqtTable1);
+        jScrollPane2.setViewportView(eqtTableX);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("x");
@@ -161,20 +168,32 @@ public class Window extends javax.swing.JFrame {
     private void pxFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pxFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pxFieldActionPerformed
-    
-    private void jCalcButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        double[][] data = new double[10][11];
 
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 11; j++) {
-                if(eqtTable.getValueAt(i,j) == null) {
-                    data[i][j] = 999;
-                } else {
-                    data[i][j] = (Double) eqtTable.getValueAt(i, j);
-                }
+    private void jCalcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCalcButtonActionPerformed
+        double[] x = new double[4];
+        double[] fx = new double[4];
+        double px = parseDouble(pxField.getText());
+
+        for(int i = 0; i < fx.length; i++) {
+            if(eqtTableFx.getValueAt(0,i) == null) {
+                fx[i] = 999;
+            } else {
+                fx[i] = (Double) eqtTableFx.getValueAt(0,i);
             }
         }
-    }
+        
+        for(int j = 0; j < x.length; j++) {
+            if(eqtTableFx.getValueAt(0,j) == null) {
+                x[j] = 999;
+            } else {
+                x[j] = (Double) eqtTableX.getValueAt(0,j);
+            }
+        }
+        
+        System.out.println(px);
+    }//GEN-LAST:event_jCalcButtonActionPerformed
+    
+
     
     /**
      * @param args the command line arguments
@@ -212,8 +231,8 @@ public class Window extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable eqtTable;
-    private javax.swing.JTable eqtTable1;
+    private javax.swing.JTable eqtTableFx;
+    private javax.swing.JTable eqtTableX;
     private javax.swing.JButton jCalcButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
